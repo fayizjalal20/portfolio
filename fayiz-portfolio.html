@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fayiz Jalal — Performance Marketer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #181818;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0ece4;
+    --muted: #888;
+    --accent: #d4ff3e;
+    --accent2: #ff6b35;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; max-width: 960px; margin: 0 auto; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 7rem;
+    position: relative;
+    max-width: 100%;
+    padding-left: 2rem; padding-right: 2rem;
+  }
+  .hero-inner { max-width: 960px; margin: 0 auto; width: 100%; }
+  .hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.1s forwards;
+  }
+  .hero-heading {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-heading em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 540px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.35s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.45s forwards;
+  }
+  .btn {
+    padding: 0.8rem 1.8rem;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0a;
+    border: none;
+  }
+  .btn-primary:hover { background: #c8f520; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border2);
+  }
+  .btn-outline:hover { border-color: var(--text); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: fadeIn 1s 1s both;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(var(--accent), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* STATS TICKER */
+  .ticker-wrap {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1.2rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-track {
+    display: inline-flex;
+    animation: ticker 30s linear infinite;
+  }
+  .ticker-item {
+    display: inline-flex; align-items: center; gap: 1.5rem;
+    padding: 0 3rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .ticker-item strong { color: var(--accent); font-weight: 600; }
+  .ticker-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border2); }
+
+  /* NUMBERS */
+  #numbers .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  #numbers h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+  #numbers h2 span { color: var(--muted); font-weight: 400; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+  .stat-cell {
+    background: var(--bg2);
+    padding: 2.5rem 2rem;
+    transition: background 0.2s;
+  }
+  .stat-cell:hover { background: var(--bg3); }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-label { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
+  .stat-sub { font-size: 0.78rem; color: #555; margin-top: 0.3rem; }
+
+  /* CAMPAIGNS */
+  #campaigns h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .section-intro { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; }
+
+  .camp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 3rem;
+  }
+  .camp-table thead th {
+    text-align: left;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #555;
+    padding: 0 1rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .camp-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .camp-table tbody tr:hover { background: var(--bg2); }
+  .camp-table td {
+    padding: 1rem;
+    font-size: 0.88rem;
+    vertical-align: middle;
+  }
+  .camp-name { color: var(--text); font-weight: 500; }
+  .camp-spend { color: var(--muted); }
+  .camp-revenue { color: var(--text); }
+  .roas-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .roas-high { background: rgba(212,255,62,0.12); color: var(--accent); }
+  .roas-mid { background: rgba(255,107,53,0.12); color: var(--accent2); }
+
+  /* LEAD GEN */
+  .leadgen-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 3rem;
+  }
+  .lg-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .lg-card:hover { border-color: var(--border2); }
+  .lg-type {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .lg-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .lg-desc { font-size: 0.83rem; color: var(--muted); }
+
+  /* INDUSTRIES */
+  .industry-list {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 3rem;
+  }
+  .industry-tag {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .industry-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ABOUT */
+  #about {
+    background: var(--bg2);
+    max-width: 100%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  #about .inner { max-width: 960px; margin: 0 auto; padding: 6rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  #about h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+  #about p { color: var(--muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 1rem; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
+  .about-tag {
+    padding: 4px 12px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .about-stats { display: flex; flex-direction: column; gap: 1.5rem; }
+  .about-stat-item { border-left: 2px solid var(--accent); padding-left: 1.25rem; }
+  .about-stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+  .about-stat-lbl { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+  /* CONTACT */
+  #contact h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  #contact p { color: var(--muted); margin-bottom: 2.5rem; }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0.9rem 1.5rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link-icon { font-size: 1rem; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: #444;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .leadgen-grid { grid-template-columns: 1fr; }
+    #about .inner { grid-template-columns: 1fr; }
+    .camp-table thead th:nth-child(3),
+    .camp-table td:nth-child(3) { display: none; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">FJ®</div>
+  <div class="nav-links">
+    <a href="#numbers">Numbers</a>
+    <a href="#campaigns">Campaigns</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Performance Marketer · Dubai, UAE</div>
+    <h1 class="hero-heading">
+      Turning ad spend<br>into <em>real revenue.</em>
+    </h1>
+    <p class="hero-sub">
+      ₹1.08 Cr+ in tracked revenue. 9.24× average ROAS across 111 campaigns. 
+      Full-funnel Meta Ads operator — from ₹500 tests to ₹2L+ scaling campaigns.
+    </p>
+    <div class="hero-ctas">
+      <a href="#numbers" class="btn btn-primary">See the numbers</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="tickerTrack">
+    <div class="ticker-item"><strong>9.24×</strong> Overall ROAS <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>₹1.08 Cr+</strong> Revenue Generated <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>21,486</strong> Total Purchases <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>2,472</strong> Leads & Conversations <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>24.7M+</strong> Total Impressions <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>111</strong> Campaigns Run <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>16.56×</strong> Peak ROAS <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>50K+</strong> Instagram Followers Grown <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>₹52L+</strong> Ad Spend Managed <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>9.24×</strong> Overall ROAS <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>₹1.08 Cr+</strong> Revenue Generated <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>21,486</strong> Total Purchases <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>2,472</strong> Leads & Conversations <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>24.7M+</strong> Total Impressions <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>111</strong> Campaigns Run <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>16.56×</strong> Peak ROAS <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>50K+</strong> Instagram Followers Grown <div class="ticker-dot"></div></div>
+    <div class="ticker-item"><strong>₹52L+</strong> Ad Spend Managed <div class="ticker-dot"></div></div>
+  </div>
+</div>
+
+<!-- NUMBERS -->
+<section id="numbers">
+  <div class="section-label reveal">Proof, not promises</div>
+  <h2 class="reveal">Real campaigns. <span>Real outcomes.</span></h2>
+  <div class="stats-grid reveal">
+    <div class="stat-cell">
+      <div class="stat-num" data-target="1085425" data-prefix="₹" data-suffix="">₹0</div>
+      <div class="stat-label">Total revenue generated</div>
+      <div class="stat-sub">From ₹11.7L in ad spend across Shopify campaigns</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">9.24×</div>
+      <div class="stat-label">Overall ROAS</div>
+      <div class="stat-sub">Across 111 campaigns — sustained, not one-off</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num" data-target="21486" data-prefix="" data-suffix="+">0</div>
+      <div class="stat-label">Total purchases driven</div>
+      <div class="stat-sub">eCommerce conversions via Meta Ads</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">16.56×</div>
+      <div class="stat-label">Peak ROAS achieved</div>
+      <div class="stat-sub">2025 AD 1 campaign — 68 purchases, ₹2,048 spend</div>
+    </div>
+  </div>
+</section>
+
+<!-- CAMPAIGNS -->
+<section id="campaigns">
+  <h2 class="reveal">Top campaigns<br>by performance</h2>
+  <p class="section-intro reveal">Highest revenue campaigns from the Casadex eCommerce account — all tracked via Meta Pixel + Conversion API.</p>
+
+  <table class="camp-table reveal">
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Spend</th>
+        <th>Revenue</th>
+        <th>ROAS</th>
+        <th>Purchases</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="camp-name">3-in-1 New Creative</td>
+        <td class="camp-spend">₹1,99,716</td>
+        <td class="camp-revenue">₹18,85,601</td>
+        <td><span class="roas-pill roas-high">9.44×</span></td>
+        <td>3,816</td>
+      </tr>
+      <tr>
+        <td class="camp-name">3-in-1 New Creative Scaling 1</td>
+        <td class="camp-spend">₹1,48,879</td>
+        <td class="camp-revenue">₹16,76,441</td>
+        <td><span class="roas-pill roas-high">11.26×</span></td>
+        <td>3,361</td>
+      </tr>
+      <tr>
+        <td class="camp-name">3-in-1 Reel Ad</td>
+        <td class="camp-spend">₹1,31,451</td>
+        <td class="camp-revenue">₹15,47,161</td>
+        <td><span class="roas-pill roas-high">11.77×</span></td>
+        <td>3,092</td>
+      </tr>
+      <tr>
+        <td class="camp-name">AI Voice Ad</td>
+        <td class="camp-spend">₹71,929</td>
+        <td class="camp-revenue">₹7,56,779</td>
+        <td><span class="roas-pill roas-high">10.52×</span></td>
+        <td>1,512</td>
+      </tr>
+      <tr>
+        <td class="camp-name">Broad Targeting 3-IN-1</td>
+        <td class="camp-spend">₹68,239</td>
+        <td class="camp-revenue">₹7,47,105</td>
+        <td><span class="roas-pill roas-high">10.95×</span></td>
+        <td>1,494</td>
+      </tr>
+      <tr>
+        <td class="camp-name">Broad Targeting 3-IN-1 Lookalike</td>
+        <td class="camp-spend">₹53,795</td>
+        <td class="camp-revenue">₹4,59,934</td>
+        <td><span class="roas-pill roas-mid">8.55×</span></td>
+        <td>919</td>
+      </tr>
+      <tr>
+        <td class="camp-name">Baby Protection Kit Broad</td>
+        <td class="camp-spend">₹29,264</td>
+        <td class="camp-revenue">₹3,40,900</td>
+        <td><span class="roas-pill roas-high">11.65×</span></td>
+        <td>580</td>
+      </tr>
+      <tr>
+        <td class="camp-name">2025 AD 1 <small style="color:#555">(peak ROAS)</small></td>
+        <td class="camp-spend">₹2,049</td>
+        <td class="camp-revenue">₹33,932</td>
+        <td><span class="roas-pill roas-high">16.56×</span></td>
+        <td>68</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="reveal" style="margin-bottom:0.5rem;">Lead gen &<br>WhatsApp campaigns</h2>
+  <p class="section-intro reveal">Insurance, B2B trade, GCC market — the same funnel model used in consultative industries like migration.</p>
+
+  <div class="leadgen-grid reveal">
+    <div class="lg-card">
+      <div class="lg-type">Lead form campaigns</div>
+      <div class="lg-num">433</div>
+      <div class="lg-desc">Leads generated across insurance & recruitment campaigns. Avg CPL ₹16.</div>
+    </div>
+    <div class="lg-card">
+      <div class="lg-type">WhatsApp / Messaging</div>
+      <div class="lg-num">2,039</div>
+      <div class="lg-desc">Conversations started via Meta click-to-WhatsApp campaigns. Avg ₹6/conv.</div>
+    </div>
+    <div class="lg-card">
+      <div class="lg-type">GCC market campaigns</div>
+      <div class="lg-num">UAE/QAT/<br>KSA</div>
+      <div class="lg-desc">Ran targeted campaigns for UAE, Qatar & Saudi Arabia audiences.</div>
+    </div>
+  </div>
+
+  <p class="section-intro reveal" style="margin-bottom:1rem;">Industries covered</p>
+  <div class="industry-list reveal">
+    <span class="industry-tag">D2C eCommerce</span>
+    <span class="industry-tag">Insurance</span>
+    <span class="industry-tag">B2B Trade</span>
+    <span class="industry-tag">Healthcare / Pharma</span>
+    <span class="industry-tag">Education Recruitment</span>
+    <span class="industry-tag">UAE / GCC Markets</span>
+    <span class="industry-tag">Migration & Visa</span>
+    <span class="industry-tag">Financial Products</span>
+    <span class="industry-tag">Meta Lead Ads</span>
+    <span class="industry-tag">Advantage+ Shopping</span>
+    <span class="industry-tag">WhatsApp Funnels</span>
+    <span class="industry-tag">ManyChat Automation</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div id="about">
+  <div class="inner">
+    <div class="reveal">
+      <h2>Built from scratch.<br>Scaled with data.</h2>
+      <p>I'm Fayiz — a self-taught performance marketer from Kerala, now based in Dubai. I started by building my own D2C brand (Casadex) and scaling it to ₹1 Cr+ revenue, which taught me everything most agencies charge to teach.</p>
+      <p>I run Meta Ads, manage SEO, build WhatsApp funnels, and handle everything from creative strategy to Pixel tracking — without needing to coordinate five freelancers.</p>
+      <p>Currently available for immediate full-time roles in Dubai/UAE.</p>
+      <div class="about-tags">
+        <span class="about-tag">Meta Ads Manager</span>
+        <span class="about-tag">Google Ads</span>
+        <span class="about-tag">Shopify</span>
+        <span class="about-tag">Meta Pixel / CAPI</span>
+        <span class="about-tag">ManyChat</span>
+        <span class="about-tag">SEMrush</span>
+        <span class="about-tag">Google Analytics</span>
+        <span class="about-tag">Landing Page CRO</span>
+      </div>
+    </div>
+    <div class="about-stats reveal">
+      <div class="about-stat-item">
+        <div class="about-stat-val">₹1.08 Cr+</div>
+        <div class="about-stat-lbl">Revenue driven via Meta Ads</div>
+      </div>
+      <div class="about-stat-item">
+        <div class="about-stat-val">111</div>
+        <div class="about-stat-lbl">Campaigns launched and optimised</div>
+      </div>
+      <div class="about-stat-item">
+        <div class="about-stat-val">50K+</div>
+        <div class="about-stat-lbl">Instagram followers grown organically</div>
+      </div>
+      <div class="about-stat-item">
+        <div class="about-stat-val">#1</div>
+        <div class="about-stat-lbl">Google ranking achieved in 2 months via SEO</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="reveal">Let's work together.</h2>
+  <p class="reveal">Based in Dubai. Available immediately. Open to full-time roles in UAE.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:fayizjalal20@gmail.com" class="contact-link">
+      <span class="contact-link-icon">✉</span> fayizjalal20@gmail.com
+    </a>
+    <a href="tel:+971508064595" class="contact-link">
+      <span class="contact-link-icon">☎</span> +971 508 064 595
+    </a>
+    <a href="https://linkedin.com/in/fayizjalal" target="_blank" class="contact-link">
+      <span class="contact-link-icon">in</span> linkedin.com/in/fayizjalal
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2026 Fayiz Jalal · Performance Marketer · Dubai, UAE
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(r => obs.observe(r));
+
+// Counter animation
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const prefix = el.dataset.prefix || '';
+  const suffix = el.dataset.suffix || '';
+  if (!target) return;
+  const duration = 1800;
+  const start = performance.now();
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(eased * target);
+    if (target >= 100000) {
+      el.textContent = prefix + '₹' + (current / 100).toFixed(0).replace(/\B(?=(\d+(?=\d{2}+\b))*\d{2}\b)/g, ',') + suffix;
+      // simpler: just format as lakhs
+      const lakhs = (current / 100000).toFixed(2);
+      el.textContent = prefix + lakhs + ' Cr' + suffix;
+    } else {
+      el.textContent = prefix + current.toLocaleString('en-IN') + suffix;
+    }
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && e.target.dataset.target) {
+      animateCounter(e.target);
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
+</script>
+</body>
+</html>
